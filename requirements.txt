@@ -1,0 +1,6 @@
+streamlit
+ultralytics
+pandas
+plotly
+scikit-learn
+langchain
