@@ -1,0 +1,5 @@
+Coloca aqui el archivo "best.pt" que descargues despues de entrenar
+tu modelo YOLOv8 personalizado (ver entrenamiento_colab/entrenar_yolo.ipynb).
+
+Mientras no exista ningun archivo .pt en esta carpeta, el sistema
+usara automaticamente el modelo generico de demo (yolov8n.pt).
