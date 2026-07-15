@@ -72,7 +72,26 @@ def _responder_con_openai(pregunta: str, contexto: str) -> str:
         )),
         HumanMessage(content=pregunta),
     ]
-    return modelo.invoke(mensajes).content
+    return _extraer_texto(modelo.invoke(mensajes).content)
+
+
+def _extraer_texto(contenido) -> str:
+    """Los modelos mas nuevos (Gemini 3.x y similares) a veces devuelven el
+    contenido como una lista de bloques (texto, firma de razonamiento, etc.)
+    en vez de un simple string. Aqui nos quedamos solo con el texto."""
+    if isinstance(contenido, str):
+        return contenido
+
+    if isinstance(contenido, list):
+        partes = []
+        for bloque in contenido:
+            if isinstance(bloque, str):
+                partes.append(bloque)
+            elif isinstance(bloque, dict) and bloque.get("type") == "text":
+                partes.append(bloque.get("text", ""))
+        return "".join(partes) if partes else str(contenido)
+
+    return str(contenido)
 
 
 def _responder_con_gemini(pregunta: str, contexto: str) -> str:
@@ -87,7 +106,7 @@ def _responder_con_gemini(pregunta: str, contexto: str) -> str:
         )),
         HumanMessage(content=pregunta),
     ]
-    return modelo.invoke(mensajes).content
+    return _extraer_texto(modelo.invoke(mensajes).content)
 
 
 def _responder_modo_demo(pregunta: str, df_alertas: pd.DataFrame) -> str:
