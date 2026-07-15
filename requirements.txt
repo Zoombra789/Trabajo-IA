@@ -10,3 +10,5 @@ langchain-openai>=0.1
 langchain-google-genai>=1.0
 openai>=1.0
 python-dotenv>=1.0
+libgl1
+libglib2.0-0
