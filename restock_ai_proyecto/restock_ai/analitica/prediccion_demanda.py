@@ -147,6 +147,12 @@ def generar_alertas_restock(df_ventas: pd.DataFrame, df_abc: pd.DataFrame, dias_
         .reset_index(drop=True)
     )
 
+    # Streamlit necesita que cada columna tenga un solo tipo de dato para
+    # poder mostrarla (usa Arrow por dentro). Esta columna mezcla numeros
+    # (1, 5) con texto ("> 7"), asi que la unificamos a texto al final,
+    # ya despues de haber calculado la urgencia con los valores originales.
+    df_alertas["dias_hasta_quiebre"] = df_alertas["dias_hasta_quiebre"].astype(str)
+
     return df_alertas
 
 
@@ -160,3 +166,4 @@ if __name__ == "__main__":
     df_abc = clasificar_abc(df_ventas)
     df_alertas = generar_alertas_restock(df_ventas, df_abc)
     print(df_alertas)
+
