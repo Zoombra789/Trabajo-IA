@@ -241,13 +241,7 @@ elif seccion == "Deteccion visual (camara)":
             if os.path.exists(ruta_temp):
                 os.remove(ruta_temp)
 
-    st.caption(
-        "Nota: el modelo de demo (yolov8n) reconoce objetos cotidianos (botellas, latas, "
-        "tazas, libros, frutas, celulares, etc.), no productos de tienda especificos. "
-        "Para la demo, usa objetos de ese tipo dentro de la caja — cada uno que reconozca "
-        "cuenta como 'producto detectado'. Para reconocer tus productos reales, hay que "
-        "entrenar un modelo propio (ver entrenamiento_colab/entrenar_yolo.ipynb)."
-    )
+    
 
 # --------------------------------------------------------------
 # 10. SECCION: CHATBOT
