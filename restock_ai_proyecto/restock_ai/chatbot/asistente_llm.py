@@ -49,15 +49,21 @@ def _construir_contexto(df_alertas: pd.DataFrame) -> str:
 def responder_pregunta(pregunta: str, df_alertas: pd.DataFrame) -> str:
     """Punto de entrada principal del chatbot. Usa OpenAI o Gemini
     (via LangChain) si hay una API key configurada; si no, responde
-    en modo demo con reglas simples."""
+    en modo demo con reglas simples. Si el modelo real falla por
+    cualquier motivo (limite de cuota diario, sin internet, clave
+    invalida, etc.), cae automaticamente al modo demo en vez de
+    romper la aplicacion -- asi el chatbot siempre responde algo."""
     contexto = _construir_contexto(df_alertas)
 
-    if OPENAI_KEY:
-        return _responder_con_openai(pregunta, contexto)
-    elif GEMINI_KEY:
-        return _responder_con_gemini(pregunta, contexto)
-    else:
-        return _responder_modo_demo(pregunta, df_alertas)
+    try:
+        if OPENAI_KEY:
+            return _responder_con_openai(pregunta, contexto)
+        elif GEMINI_KEY:
+            return _responder_con_gemini(pregunta, contexto)
+    except Exception:
+        pass  # el modelo real fallo -> seguimos abajo con el modo demo
+
+    return _responder_modo_demo(pregunta, df_alertas)
 
 
 def _responder_con_openai(pregunta: str, contexto: str) -> str:
