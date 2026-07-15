@@ -31,4 +31,4 @@ CAPACIDAD_MAXIMA_ESTANTE = 20  # productos esperados en un estante "lleno"
 # los proveedores suelen renombrar/retirar modelos con el tiempo.
 # --------------------------------------------------------------
 MODELO_OPENAI = "gpt-4o-mini"
-MODELO_GEMINI = "gemini-2.5-flash"
+MODELO_GEMINI = "gemini-flash-latest"
